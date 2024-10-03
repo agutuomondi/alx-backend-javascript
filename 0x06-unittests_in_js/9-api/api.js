@@ -1,22 +1,20 @@
 const express = require('express');
-const app = express();
 
-app.get('/', (req, res) => {
+const app = express();
+const PORT = 7865;
+
+app.get('/', (_, res) => {
   res.send('Welcome to the payment system');
 });
 
-app.get('/cart/:id([0-9]+)', (req, res) => {
+app.get('/cart/:id(\\d+)', (req, res) => {
   const id = req.params.id;
+
   res.send(`Payment methods for cart ${id}`);
 });
 
-app.use((req, res) => {
-  res.status(404).send('Not Found');
+app.listen(PORT, () => {
+  console.log(`API available on localhost port ${PORT}`);
 });
 
-const port = 7865;
-const server = app.listen(port, () => {
-  console.log(`API available on localhost port ${port}`);
-});
-
-module.exports = server; // Export the server instance
+module.exports = app;
